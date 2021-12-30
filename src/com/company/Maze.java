@@ -14,10 +14,28 @@ public class Maze {
 
     private int h, w;
 
-    private boolean[][] isClear;
+    private MazeClear m;
+    //private MazeGenerator gen;
     private Coordinate startPosition;
     private Coordinate endPosition;
     private String text;
+
+//    public Maze(int w, int h){
+//        //Random generate maze
+//        startPosition = new Coordinate(0,0);
+//        endPosition = new Coordinate(w-1, h-1);
+//
+//        gen = new MazeGenerator(w, h);
+//        m = new MazeClear(gen.mazeClear);
+//
+//        for (int i = 0; i < m.MazeClear.length; i++) {
+//            for (int j = 0; j < m.MazeClear[i].length; j++) {
+//                System.out.print(m.MazeClear[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
+//
+//    }
 
 
     public Maze(String filename) {
@@ -50,7 +68,8 @@ public class Maze {
             this.h=count;
             this.w=data.length();
 
-            isClear = new boolean[h][w];
+            //isClear = new boolean[h][w];
+            m = new MazeClear(w,h);
 
             String[] lines = text.split("\n");
 
@@ -58,9 +77,9 @@ public class Maze {
                 for(int col=0; col<w; col++){
 
                     if (lines[row].charAt(col) == WALL)
-                        isClear[row][col] = false;
+                        m.MazeClear[row][col] = false;
                     else
-                        isClear[row][col] = true;
+                        m.MazeClear[row][col] = true;
                 }
             }
 
@@ -80,7 +99,7 @@ public class Maze {
         // Comparison between BFS solver and A* solver
         System.out.println("Solving maze with BFS algorithm...");
         long startTime = System.nanoTime();
-        BFS bfs = new BFS(this.isClear, this.startPosition, this.endPosition);
+        BFS bfs = new BFS(this.m, this.startPosition, this.endPosition);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime)/1000000;
 
@@ -89,7 +108,7 @@ public class Maze {
 
         System.out.println("Solving maze with A* algorithm...");
         long startTimeA = System.nanoTime();
-        Astar astar = new Astar(this.isClear, this.startPosition, this.endPosition);
+        Astar astar = new Astar(this.m, this.startPosition, this.endPosition);
         long endTimeA = System.nanoTime();
         long durationA = (endTimeA - startTimeA)/1000000;
 

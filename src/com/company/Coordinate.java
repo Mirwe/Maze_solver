@@ -30,7 +30,7 @@ public class Coordinate implements Comparable<Coordinate>{
         return new Coordinate(row,col+1);
     }
 
-    public LinkedList<Coordinate> neighbors(){
+    public LinkedList<Coordinate> neighbours(){
         LinkedList<Coordinate> vicini = new LinkedList<>();
         vicini.add(this.left());
         vicini.add(this.right());

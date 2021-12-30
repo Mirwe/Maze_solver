@@ -6,26 +6,21 @@ import java.util.HashMap;
 
 public class BFS {
 
-    private boolean[][] m;
     private LinkedList<Coordinate> visited;
     private Map<String, String> previous;
     private int h,w;
     private Coordinate source, end;
+    private MazeClear m;
 
-    public BFS(boolean[][] m, Coordinate source, Coordinate end)
+    public BFS(MazeClear m, Coordinate source, Coordinate end)
     {
 
-        this.h = m.length;
-        this.w = m[0].length;
+        this.h = m.getH();
+        this.w = m.getW();
         this.source = source;
         this.end = end;
 
-        this.m = new boolean[h][w];
-        for(int row=0; row<h; row++){
-            for(int col=0; col<w; col++){
-                this.m[row][col] = m[row][col];
-            }
-        }
+        this.m = new MazeClear(m);
 
         previous = new HashMap<String, String>();
         visited = new LinkedList<>();
@@ -42,11 +37,11 @@ public class BFS {
             Coordinate visiting = toVisit.remove();
             visited.add(visiting);
 
-            LinkedList<Coordinate> vicini = visiting.neighbors();
+            LinkedList<Coordinate> vicini = visiting.neighbours();
 
             for (Coordinate n : vicini) {
 
-                if (isValid(n)) {
+                if (m.checkClearAndSetFalse(n)) {
                     previous.put(n.label(), visiting.label());
 
                     if (n.isEqual(end)) {
@@ -63,18 +58,6 @@ public class BFS {
 
     }
 
-    public boolean isValid(Coordinate point){
-       if(point.row() >= 0 && point.row() < h) {
-           if (point.col() >= 0 && point.col() < w) {
-
-               boolean isClear = this.m[point.row()][point.col()];
-               this.m[point.row()][point.col()] = false;
-
-               return isClear;
-           }
-       }
-       return false;
-    }
 
     public LinkedList<String> getPath(){
 

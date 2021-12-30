@@ -13,18 +13,18 @@ public class Astar {
     private PriorityQueue<Coordinate> pQueue; //priority queue, it prioritize the Coordinates with lower fCost
     private Map<String, String> cameFrom;
     private int w,h;
-    private boolean[][] m;
+    private MazeClear m;
     private boolean solutionFound;
 
 
-    public Astar(boolean[][] m, Coordinate from, Coordinate to){
+    public Astar(MazeClear m, Coordinate from, Coordinate to){
 
         this.solutionFound = false;
         this.from = from;
         this.to = to;
-        this.h = m.length;
-        this.w = m[0].length;
-        this.m = m;
+        this.h = m.getH();
+        this.w = m.getW();
+        this.m = new MazeClear(m);
         this.visited = new LinkedList<>();
         this.cameFrom = new HashMap<String, String>();
         this.pQueue = new PriorityQueue<>();
@@ -44,10 +44,10 @@ public class Astar {
 
             else{
 
-                LinkedList<Coordinate> vicini = current.neighbors();
+                LinkedList<Coordinate> vicini = current.neighbours();
 
                 for (Coordinate n : vicini) {
-                    if (isValid(n)) {
+                    if (m.checkClearAndSetFalse(n)) {
                         cameFrom.put(n.label(), current.label());
                         n.setfCost(cameFrom.size() + h(n));
                         pQueue.add(n);
@@ -69,18 +69,7 @@ public class Astar {
         return Math.sqrt((to.row() - c.row()) +(to.col() - c.col()));
     }
 
-    public boolean isValid(Coordinate point){
-        if(point.row() >= 0 && point.row() < h)
-            if(point.col() >= 0 && point.col() < w){
 
-                boolean isClear = this.m[point.row()][point.col()];
-                this.m[point.row()][point.col()] = false;
-
-                return isClear;
-            }
-
-        return false;
-    }
 
     public LinkedList<String> getPath(){
 
