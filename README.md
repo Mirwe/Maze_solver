@@ -1,6 +1,6 @@
 # Maze Solver
 
-Implementation of BFS and A* algorithm to find the solution of maze given as input.
+Implementation of BFS and A* algorithms to find the solution of maze given as input.
 
 The maze is a txt file with
   - | : walls
