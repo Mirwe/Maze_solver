@@ -15,27 +15,10 @@ public class Maze {
     private int h, w;
 
     private MazeClear m;
-    //private MazeGenerator gen;
     private Coordinate startPosition;
     private Coordinate endPosition;
     private String text;
 
-//    public Maze(int w, int h){
-//        //Random generate maze
-//        startPosition = new Coordinate(0,0);
-//        endPosition = new Coordinate(w-1, h-1);
-//
-//        gen = new MazeGenerator(w, h);
-//        m = new MazeClear(gen.mazeClear);
-//
-//        for (int i = 0; i < m.MazeClear.length; i++) {
-//            for (int j = 0; j < m.MazeClear[i].length; j++) {
-//                System.out.print(m.MazeClear[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
-//
-//    }
 
 
     public Maze(String filename) {
@@ -93,7 +76,6 @@ public class Maze {
     }
 
     public void solveMaze(){
-
 
 
         // Comparison between BFS solver and A* solver
